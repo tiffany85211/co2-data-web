@@ -11,6 +11,8 @@ var all_total = {};
     angular
         .module('store', ['ngMaterial'])
         .controller('storeController',['$scope','$http', function($scope, $http) {
+            $scope.card_subtitle = "Choose a country to see its total carbon emissions from fossil fuel \
+                               consumption and cement production during the selected year range."
             $scope.default = {
                 country: "All Countries",
                 year_begin: "1751",

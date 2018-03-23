@@ -3,6 +3,7 @@
 <html ng-app="store">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="width=device-width,initial-scale=1" />
         <title>CO2 Emission by Nations</title>
         <script type='text/javascript' src="./lib/angular/angular.js"></script>
         <script type="text/javascript" src="./lib/node_modules/angular-aria/angular-aria.js"></script> 
@@ -13,96 +14,99 @@
         <script type="text/javascript" src="./lib/ammap/maps/js/worldHigh.js"></script>
         <script type='text/javascript' src="./js/country-list.js"></script>
         <script type='text/javascript' src="./js/script.js"></script>
-        <link rel='stylesheet' type='text/css' href="./css/style.css" />
         <link rel="stylesheet" type="text/css" href="./lib/ammap/ammap.css" media="all" />
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic">
         <link rel="stylesheet" type="text/css" href="./lib/node_modules/angular-material/angular-material.css">
+        <link rel='stylesheet' type='text/css' href="./css/style.css" />
     </head>
 
     <body ng-controller="storeController">
-        <div layout="row" layout-align="center" class="title">
-            <h1>CO2 Emissions from Fossil Fuels since 1751, By Nation</h1>
+        <div layout="column" layout-align="start center" class="title">
+            <h1>CO2 Emissions from Fossil Fuels</h1>
+            <h3>1751 - 2014   By Nation</h3>
         </div>
 
-        <div>
-            <md-content class="md-padding" layout-xs="column" layout="row">
-                <div flex-xs flex-gt-xs="50" layout="column">
-                    <md-card>
+        <div class="md-padding">
+            <md-content>
+                <div layout="column">
+                    <md-card class="select">
                         <md-card-title>
                             <md-card-title-text>
                             <span class="md-headline">Total Carbon Emissions</span>
-                            <span class="md-subhead">Choose a country to see its total carbon emissions from fossil fuel consumption and cement production during the selected time.</span>
+                            <span class="md-subhead">{{card_subtitle}}</span>
                             </md-card-title-text>
                         </md-card-title>
                     
-                        <md-card-content layout="row" layout-align="start center">
-                            <md-input-container>
-                                <label>Country</label>
-                                <md-select
-                                    ng-init="selectedCountry = default.country"
-                                    ng-model="selectedCountry"
-                                    ng-change="onCountryChange(selectedCountry)">
-                                    <md-option value="All Countries"><em>All Countries</em></md-option>
-                                    <md-option 
-                                        ng-repeat="country in countries | orderBy: country | capitalize" 
-                                        value="{{country}}">
-                                        {{country}}
-                                    </md-option>
-                                </md-select>
-                            </md-input-container>
+                        <md-card-content layout="row" layout-sm="column" layout-xs="column" layout-align="start center">
+                            <div class="select-country" flex>
+                                <md-input-container>
+                                    <label>Country</label>
+                                    <md-select
+                                        ng-init="selectedCountry = default.country"
+                                        ng-model="selectedCountry"
+                                        ng-change="onCountryChange(selectedCountry)">
+                                        <md-option value="All Countries"><em>All Countries</em></md-option>
+                                        <md-option 
+                                            ng-repeat="country in countries | orderBy: country | capitalize" 
+                                            value="{{country}}">
+                                            {{country}}
+                                        </md-option>
+                                    </md-select>
+                                </md-input-container>
+                            </div>
                     
-                            <md-input-container>
-                                <label>Year from</label>
-                                <md-select
-                                    ng-init="selectedYearBegin = default.year_begin"
-                                    ng-model="selectedYearBegin"
-                                    ng-change="onYearChange(data, selectedYearBegin, selectedYearEnd)">
-                                    <md-option 
-                                        ng-repeat="begin_year in years" 
-                                        value="{{begin_year}}">
-                                        {{begin_year}}
-                                    </md-option>
-                                </md-select>
-                            </md-input-container>
+                            <div class="select-year" flex>
+                                <md-input-container>
+                                    <label>Year from</label>
+                                    <md-select
+                                        ng-init="selectedYearBegin = default.year_begin"
+                                        ng-model="selectedYearBegin"
+                                        ng-change="onYearChange(data, selectedYearBegin, selectedYearEnd)">
+                                        <md-option 
+                                            ng-repeat="begin_year in years" 
+                                            value="{{begin_year}}">
+                                            {{begin_year}}
+                                        </md-option>
+                                    </md-select>
+                                </md-input-container>
 
-                            <md-input-container>
-                                <label>Year to</label>
-                                <md-select 
-                                    ng-init="selectedYearEnd = default.year_end"
-                                    ng-model="selectedYearEnd"
-                                    ng-change="onYearChange(data, selectedYearBegin, selectedYearEnd)">
-                                    <md-option 
-                                        ng-repeat="end_year in years" 
-                                        value="{{end_year}}">
-                                        {{end_year}}
-                                    </md-option>
-                                </md-select>
-                            </md-input-container>
+                                <md-input-container>
+                                    <label>Year to</label>
+                                    <md-select 
+                                        ng-init="selectedYearEnd = default.year_end"
+                                        ng-model="selectedYearEnd"
+                                        ng-change="onYearChange(data, selectedYearBegin, selectedYearEnd)">
+                                        <md-option 
+                                            ng-repeat="end_year in years" 
+                                            value="{{end_year}}">
+                                            {{end_year}}
+                                        </md-option>
+                                    </md-select>
+                                </md-input-container>
+                            </div>
                         </md-card-content>
-                        <my-card-title class="title">
-                            <span id="totalnum"
-                                ng-class="{'top20': getRank(selectedCountry) <= 20 && getRank(selectedCountry) >0 }">
-                                <b>{{getTotal(selectedCountry)}}</b>
-                            </span>
-                            <h4 id="totaltext">
-                                Million Metric Tons of C
-                            </h4>
-                            <h4 id="totaltext" 
-                                ng-show="getRank(selectedCountry) <= 20 && getRank(selectedCountry) >0" >
-                                World Ranking: {{getRank(selectedCountry)}}
-                            </h4>
-                        </my-card-title>
-                        <md-button ng-click="showMap = !showMap" ng-show="!showMap">
-                            Show World Heat Map
-                        </md-button>
-                        <md-button ng-click="showMap = !showMap" ng-show="showMap">
-                            Hide World Heat Map
-                        </md-button>
                     </md-card>
-                    
+                    <md-card class="result">
+                        <my-card-title class="title">
+                            <h1 ng-class="{'top20': getRank(selectedCountry) <= 20 && getRank(selectedCountry) >0 }">
+                                {{getTotal(selectedCountry)}}</h1>
+                            <h4>Million Metric Tons of C</h4>
+                            <h4 ng-show="getRank(selectedCountry) <= 20 && getRank(selectedCountry) >0">
+                                World Ranking: {{getRank(selectedCountry)}}</h4>
+                        </my-card-title>
+                    </md-card>
+                    <md-button  class="md-raised md-primary" ng-click="showMap = !showMap" ng-show="!showMap">
+                        Show World Heat Map
+                    </md-button>
+                    <md-button  class="md-raised" ng-click="showMap = !showMap" ng-show="showMap">
+                        Hide World Heat Map
+                    </md-button>
                 </div>
             </md-content>
         </div>
+        
         <div id="mapdiv" ng-show="showMap"></div>
+        
     </body>
 
 </html>

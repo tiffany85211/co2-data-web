@@ -1,11 +1,17 @@
+body {
+    margin-top: 20px;
+}
+
 .title {
-    font-family: "Georgia";
-    margin: 20px;
     text-align: center;
 }
 
-#totalnum {
-    font-size: 6vw;
+.title>h1 {
+    margin-bottom: 0px;
+}
+
+.top20 {
+    color: #C62828;
 }
 
 #mapdiv {
@@ -19,6 +25,8 @@
     color: #B4B4B7;
 }
 
-.top20 {
-    color: red;
+/* custom for Desktop and for Mobile */
+@media screen and (min-width: 1024px) { 
+}
+@media screen and (max-width: 640px) { 
 }
