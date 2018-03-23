@@ -29,6 +29,17 @@ var all_total = {};
             $scope.getTotal = function(country) {
                 return all_total[country.toUpperCase()];
             }
+            $scope.getRank = function(country) {
+                let sorted_all_total = Object.keys(all_total).sort(
+                    function(a,b) {
+                        return all_total[b]-all_total[a];
+                    });
+                let rank = sorted_all_total.findIndex(
+                    function findCountry(c) { 
+                        return c === country.toUpperCase(); 
+                    });
+                return rank;
+            }
 
             $http.get('./data/fossil-fuel-co2-emissions-by-nation.json')
                 .success(function(data) {

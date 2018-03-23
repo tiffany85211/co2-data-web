@@ -18,12 +18,12 @@
         <link rel="stylesheet" type="text/css" href="./lib/node_modules/angular-material/angular-material.css">
     </head>
 
-    <body>
+    <body ng-controller="storeController">
         <div layout="row" layout-align="center" class="title">
             <h1>CO2 Emissions from Fossil Fuels since 1751, By Nation</h1>
         </div>
 
-        <div ng-controller="storeController">
+        <div>
             <md-content class="md-padding" layout-xs="column" layout="row">
                 <div flex-xs flex-gt-xs="50" layout="column">
                     <md-card>
@@ -79,17 +79,30 @@
                             </md-input-container>
                         </md-card-content>
                         <my-card-title class="title">
-                            <span id="totalnum">
+                            <span id="totalnum"
+                                ng-class="{'top20': getRank(selectedCountry) <= 20 && getRank(selectedCountry) >0 }">
                                 <b>{{getTotal(selectedCountry)}}</b>
                             </span>
-                            <h4 id="totaltext">million metric tons of C</h4>
+                            <h4 id="totaltext">
+                                Million Metric Tons of C
+                            </h4>
+                            <h4 id="totaltext" 
+                                ng-show="getRank(selectedCountry) <= 20 && getRank(selectedCountry) >0" >
+                                World Ranking: {{getRank(selectedCountry)}}
+                            </h4>
                         </my-card-title>
+                        <md-button ng-click="showMap = !showMap" ng-show="!showMap">
+                            Show World Heat Map
+                        </md-button>
+                        <md-button ng-click="showMap = !showMap" ng-show="showMap">
+                            Hide World Heat Map
+                        </md-button>
                     </md-card>
+                    
                 </div>
             </md-content>
         </div>
-        
-        <div class="row" id="mapdiv"></div>
+        <div id="mapdiv" ng-show="showMap"></div>
     </body>
 
 </html>
