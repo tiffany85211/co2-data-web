@@ -1,0 +1,17 @@
+{
+  "name": "test",
+  "version": "1.0.0",
+  "description": "",
+  "main": "",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "angular-animate": "^1.4.14",
+    "angular-aria": "^1.4.14",
+    "angular-material": "^1.1.8",
+    "angular-messages": "^1.4.14"
+  }
+}

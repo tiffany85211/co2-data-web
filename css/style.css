@@ -1,0 +1,24 @@
+.title {
+    font-family: "Georgia";
+    margin: 20px;
+    text-align: center;
+}
+
+#totalnum {
+    font-size: 6vw;
+}
+
+#totaltext {
+    margin-bottom: 50px;
+}
+
+#mapdiv {
+    width: 100%;
+    height: 500px;
+    font-size: 70%;
+    padding: 5px 0;
+    text-align: center;
+    background-color: #EEEEEE;
+    margin-top: 1px;
+    color: #B4B4B7;
+}
